@@ -6,6 +6,17 @@ set number  " Show line numbers
 syntax on
 filetype plugin indent on
 
+" Install vim-plug if it doesn't exist
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -85,7 +96,7 @@ let g:fzf_buffers_jump = 1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'FZF'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,vendor/*
-
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Rust
 let g:racer_cmd = "racer"
